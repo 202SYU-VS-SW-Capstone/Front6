@@ -1,0 +1,72 @@
+/* 회원가입 컨테이너 설정 */
+.signup-container {
+    width: 150%;
+    max-width: 500px;
+    padding: 2rem;
+    margin: 5% auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    text-align: center;
+}
+
+/* 이용약관 체크박스 스타일 */
+.terms-container label {
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    gap: 0.5rem; 
+    margin-bottom: 1rem; 
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.terms-container input[type="checkbox"] {
+    width: 1rem; 
+    height: 1rem;
+    margin: 0; 
+    cursor: pointer; 
+}
+
+
+/* 회원가입 버튼 */
+.submit-button {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: #2ecc71;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1.5rem;
+}
+
+/* 풋터 */
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 0.8rem;
+    margin-top: 2rem;
+    position: relative; 
+}
+
+.footer a {
+    color: #81C975;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+.login-link{
+margin-top: 30px;
+}
+

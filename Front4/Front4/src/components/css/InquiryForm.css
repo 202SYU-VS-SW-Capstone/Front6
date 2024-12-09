@@ -1,0 +1,94 @@
+/* 부모 컨테이너 스타일 */
+.inquiry-form {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: white;
+  padding: 40px 50px;
+  margin: 30px auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  font-family: 'Arial', sans-serif;
+  box-sizing: border-box;
+}
+
+form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* 항목 간의 간격을 균일하게 설정 */
+}
+
+/* 제목 스타일 */
+.inquiry-form h1 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* 입력 필드 스타일 */
+.input-title,
+.input-content {
+  width: 100%;
+  padding: 15px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-title:focus,
+.input-content:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: 0 0 6px rgba(76, 175, 80, 0.6);
+}
+
+/* 텍스트 영역의 높이 조절 */
+.input-content {
+  height: 140px;
+  resize: vertical;
+}
+
+/* 버튼 스타일 */
+.submit-button {
+  width: 100%;
+  padding: 14px 0;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .inquiry-form {
+    padding: 20px 30px;
+  }
+
+  form {
+    gap: 15px; /* 작은 화면에서는 간격 축소 */
+  }
+
+  .input-title,
+  .input-content {
+    font-size: 14px;
+  }
+
+  .submit-button {
+    font-size: 16px;
+  }
+}

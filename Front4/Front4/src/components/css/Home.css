@@ -1,0 +1,101 @@
+/* Home.css */
+
+/* 기본 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  
+  .home-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center; 
+  }
+  
+  
+  .main-section {
+    margin-top: 50px;
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  }
+  
+  .main-image {
+    width: 80%;  
+    max-width: 1000px;
+    height: auto;
+    margin-bottom: 20px; 
+  }
+  
+  
+  .upload-button {
+    padding: 15px 30px;
+    background-color: #28a745; 
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px; 
+  }
+  
+  .upload-button:hover {
+    background-color: #218838;
+  }
+  
+  
+  .recipe-section {
+    margin-top: 60px;
+    text-align: center;
+  }
+  
+  .recipe-section h3 {
+    margin-bottom: 10px; 
+  }
+  
+ 
+  .recipe-section h3::after {
+    content: "";
+    display: block;
+    height: 3px;
+    background-color: #28a745; 
+    margin-top: 10px;
+    width: 50%; 
+    margin-left: auto;
+    margin-right: auto; 
+    margin-bottom: 50px; 
+  }
+  
+  .gallery {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+  }
+  
+  .gallery-item {
+    text-align: center;
+  }
+  
+  .gallery-item img {
+    width: 200px;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .gallery-item p {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .gallery-item span {
+    font-size: 14px;
+    color: gray;
+    margin-top: 5px;
+  }

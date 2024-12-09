@@ -1,0 +1,57 @@
+.memberlist-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .memberlist-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .member-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .member-table th,
+  .member-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .member-table th {
+    background-color: #7ed957;
+    color: white;
+  }
+  
+  .manage-button,
+  .delete-button {
+    background-color: #7ed957;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 2px;
+  }
+  
+  .delete-button {
+    background-color: #ff6961;
+  }
+  
+  .pagination {
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    border: none;
+    background-color: #7ed957;
+    color: white;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  

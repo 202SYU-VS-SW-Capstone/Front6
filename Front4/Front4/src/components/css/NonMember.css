@@ -1,0 +1,103 @@
+/* 전체 레이아웃 */
+.non-member-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 80px;
+    font-family: 'Arial', sans-serif;
+    height: calc(100vh - 120px); /* 헤더와 푸터를 제외한 영역 */
+  }
+  
+  /* 왼쪽 로그인 폼 영역 */
+  .non-member-left {
+    flex: 1;
+    max-width: 40%;
+  }
+  
+  .non-member-title {
+    font-size: 2.5rem; /* 제목 크기 */
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-input {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .login-button {
+    background-color: #66bb6a;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .login-button:hover {
+    background-color: #43a047;
+  }
+  
+  .non-member-links {
+    margin-top: 30px;
+  }
+  
+  .non-member-link {
+    display: block;
+    margin-bottom: 10px;
+    color: #66bb6a;
+    font-size: 1rem;
+    text-decoration: none;
+  }
+  
+  .non-member-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* 오른쪽 이미지 및 텍스트 영역 */
+  .non-member-right {
+    flex: 1;
+    max-width: 50%;
+    text-align: center;
+  }
+  
+  .non-member-image {
+    width: 80%; /* 이미지 크기 */
+    max-width: 400px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .non-member-text {
+    font-size: 1.5rem; /* 이미지 아래 텍스트 크기 */
+    color: #555;
+  }
+  
+  /* 반응형 디자인 */
+  @media (max-width: 768px) {
+    .non-member-content {
+      flex-direction: column;
+      padding: 20px;
+    }
+  
+    .non-member-left,
+    .non-member-right {
+      max-width: 100%;
+      text-align: center;
+    }
+  
+    .non-member-image {
+      width: 100%;
+    }
+  }
+  

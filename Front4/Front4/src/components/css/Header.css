@@ -1,0 +1,146 @@
+/* 기본 헤더 스타일 */
+header {
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+header.scrolled {
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 네비게이션 바 */
+nav {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 로고 */
+.nav-logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-logo:hover {
+  color: #81C975;
+}
+
+/* 메뉴 스타일 */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.nav-menu li {
+  list-style: none;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-menu a:hover {
+  color: #81C975;
+  transform: scale(1.1);
+}
+
+/* 서브메뉴 스타일 */
+.submenu-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.submenu {
+  display: block;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 220px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.submenu li {
+  list-style: none;
+  padding: 12px 0;
+}
+
+.submenu li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.submenu li a:hover {
+  color: #81C975;
+}
+
+/* 모바일 메뉴 */
+.menu-toggle {
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 280px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
+  .submenu {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+}
+
+.logo-image {
+  width: 130px; /* 원하는 크기로 설정 */
+  height: auto;
+}

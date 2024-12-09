@@ -1,0 +1,88 @@
+.notice-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .notice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  h2 {
+    color: #4caf50;
+  }
+  
+  .search-section {
+    display: flex;
+  }
+  
+  .search-input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px 0 0 5px;
+  }
+  
+  .search-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .register-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin: 20px 0;
+  }
+  
+  .notice-list {
+    margin-top: 20px;
+  }
+  
+  .notice-item {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+  }
+  
+  .pagination {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .page-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .page-button:hover {
+    text-decoration: underline;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  input,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .submit-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  

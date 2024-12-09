@@ -1,0 +1,123 @@
+.ingredient-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #fafafa;
+  }
+  
+  .form-group {
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .image-upload {
+    width: 100%;
+    max-width: 300px;
+    height: 200px;
+    background-color: #E8F5E9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px; /* 아래 간격 추가 */
+    margin-left: 100px;
+  }
+  
+  .image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .image-placeholder {
+    color: #666;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .hidden-input {
+    display: none;
+  }
+  
+  .text-input, .dropdown, .date-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #fff;
+  }
+  
+  .weight-input-container, .quantity-input-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .weight-input {
+    width: 70px;
+    text-align: right;
+    padding: 8px;
+    margin-right: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+  
+  .weight-unit-dropdown {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+  
+  .quantity-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  
+  .quantity-display {
+    padding: 0 15px;
+    font-size: 18px;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #66bb6a;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #57a05d;
+  }
+  

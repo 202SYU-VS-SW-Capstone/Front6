@@ -1,0 +1,82 @@
+/* 전체 Footer */
+footer {
+  background-color: #1a1a1a; 
+  color: #f2f2f2; 
+  padding: 20px 15px; /* 패딩 축소 */
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+/* 내부 레이아웃 */
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1000px; /* 최대 폭 축소 */
+  margin: 0 auto;
+  flex-wrap: wrap; 
+  gap: 10px;
+}
+
+/* 섹션 스타일 */
+.footer-section {
+  flex: 1;
+  min-width: 200px; /* 섹션 최소 크기 축소 */
+  padding: 0 10px; /* 패딩 축소 */
+  margin-bottom: 15px; /* 간격 줄임 */
+}
+
+.footer-section h3, .footer-section h4 {
+  font-size: 16px; /* 폰트 크기 축소 */
+  margin-bottom: 8px;
+  color: #28a745; 
+}
+
+.footer-section p {
+  font-size: 12px; /* 폰트 크기 축소 */
+  margin-bottom: 5px;
+  color: #cccccc;
+  line-height: 1.4; /* 줄 간격 축소 */
+}
+
+/* 소셜 링크 스타일 */
+.social-links {
+  display: flex;
+  gap: 8px; /* 간격 축소 */
+}
+
+.social-links a {
+  color: #28a745; 
+  text-decoration: none;
+  font-size: 14px; /* 폰트 크기 축소 */
+  padding: 3px 8px; /* 패딩 축소 */
+  border: 1px solid #28a745;
+  border-radius: 3px; /* 둥글기 축소 */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.social-links a:hover {
+  background-color: #28a745; 
+  color: #fff; 
+}
+
+/* 하단 바 */
+.footer-bottom {
+  text-align: center;
+  padding-top: 15px; /* 패딩 축소 */
+  border-top: 1px solid #333;
+  font-size: 12px; /* 폰트 크기 축소 */
+  color: #999;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-section {
+    padding: 5px 0; /* 패딩 축소 */
+  }
+}

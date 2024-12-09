@@ -50,7 +50,8 @@ const Header = () => {
                 <li><Link to="/recipe">Recipe</Link></li>
                 <li><Link to="/imageAnalysis">Image Analysis</Link></li>
                 <li><Link to="/fridgeInventory">Fridge Inventory</Link></li>
-               {/* 
+              
+              {/* 주석처리..?*/}
                   <li><Link to="/mypage">mypage</Link></li>  
                   <li><Link to="/recipe">recipe</Link></li>  
                   <li><Link to="/ingredient">ingredient</Link></li>  
@@ -60,14 +61,13 @@ const Header = () => {
                   <li><Link to="/withdraw">Withdraw</Link></li>  
                   <li><Link to="/passwordChange">PasswordChange</Link></li>  
                   <li><Link to="/ReportForm">ReportForm</Link></li>  
-                  }
-
+                  
                   <li><Link to="/manager">Manager</Link></li>  
                   <li><Link to="/memberList">MemberList</Link></li>
                   <li><Link to="/notice">Notice</Link></li>
                   <li><Link to="/nonMember">NonMember</Link></li>
                   <li><Link to="/dataManagement">DataManagement</Link></li>
-              */}
+              
 
               
               </ul>

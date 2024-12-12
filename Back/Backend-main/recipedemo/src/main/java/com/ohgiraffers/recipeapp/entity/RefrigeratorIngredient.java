@@ -3,7 +3,10 @@ package com.ohgiraffers.recipeapp.entity;
 import com.ohgiraffers.recipeapp.enums.IngredientStatus;
 import com.ohgiraffers.recipeapp.keys.RefrigeratorIngredientId;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -31,7 +34,7 @@ public class RefrigeratorIngredient {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private IngredientStatus status = IngredientStatus.UNUSED; // 재료 상태
+    private IngredientStatus status = IngredientStatus.Unused; // 재료 상태
 
     @Column(name = "expiration_date")
     private LocalDate expirationDate; // 재료의 유통기한

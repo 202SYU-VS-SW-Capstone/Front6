@@ -1,7 +1,10 @@
 package com.ohgiraffers.recipeapp.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -15,6 +18,7 @@ public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "recipe_id") // 테이블의 컬럼명에 매핑
     private Long id; // 레시피 ID
 
     @ManyToOne

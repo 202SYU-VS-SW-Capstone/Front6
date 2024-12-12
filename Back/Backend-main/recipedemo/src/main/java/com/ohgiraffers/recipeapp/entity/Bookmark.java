@@ -1,7 +1,10 @@
 package com.ohgiraffers.recipeapp.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -15,6 +18,7 @@ public class Bookmark { // 북마크 테이블
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "bookmark_id")
     private Long id; // 북마크 ID
 
     @ManyToOne

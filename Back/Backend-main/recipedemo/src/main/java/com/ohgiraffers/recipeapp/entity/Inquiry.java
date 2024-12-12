@@ -2,7 +2,10 @@ package com.ohgiraffers.recipeapp.entity;
 
 import com.ohgiraffers.recipeapp.enums.InquiryStatus;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -16,6 +19,7 @@ public class Inquiry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "inquiry_id")
     private Long id; // 문의 ID
 
     @ManyToOne
@@ -30,5 +34,5 @@ public class Inquiry {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "ENUM('Incomplete', 'Complete')")
-    private InquiryStatus status = InquiryStatus.INCOMPLETE; // 문의 상태
+    private InquiryStatus status = InquiryStatus.Incomplete; // 문의 상태
 }

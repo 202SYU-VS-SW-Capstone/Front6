@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './css/Header.css';
 
-const Header = () => {
+const MHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -46,21 +46,15 @@ const Header = () => {
             <Link to="#"> ☰</Link>
             {submenuOpen && (
               <ul className="submenu">
-       
-                <li><Link to="/imageAnalysis">Image Analysis</Link></li>
-                <li><Link to="/fridgeInventory">Fridge Inventory</Link></li>
-              
-              {/* 주석처리..?*/}
-                  <li><Link to="/mypage">mypage</Link></li>  
-          
-                  <li><Link to="/ingredient">ingredient</Link></li>  
-                  <li><Link to="/imageAnalysis">imageAnalysis</Link></li>  
-                  <li><Link to="/recipeResults">RecipeResults</Link></li>  
-                  <li><Link to="/fridgeInventory">FridgeInventory</Link></li>  
-                  <li><Link to="/withdraw">Withdraw</Link></li>  
-                  <li><Link to="/passwordChange">PasswordChange</Link></li>  
-                  <li><Link to="/ReportForm">ReportForm</Link></li>  
+                <li><Link to="/recipe">Recipe</Link></li>
+            
                   
+                  <li><Link to="/manager">Manager</Link></li>  
+                  <li><Link to="/memberList">MemberList</Link></li>
+                  <li><Link to="/notice">Notice</Link></li>
+                  <li><Link to="/nonMember">NonMember</Link></li>
+                  <li><Link to="/dataManagement">DataManagement</Link></li>
+              
 
               
               </ul>
@@ -80,4 +74,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default MHeader;

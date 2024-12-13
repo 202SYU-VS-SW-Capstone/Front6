@@ -16,6 +16,8 @@ import Withdraw from './pages/Withdraw';
 import PasswordChange from './pages/PasswordChange';
 import InquiryForm from './pages/InquiryForm';
 import ReportForm from './pages/ReportForm';
+import ManageLogin from './pages/ManageLogin.js';
+import MMainLayout from './layouts/MMainLayout.js';
 
 //yn
 import Manager  from './pages/Manager';
@@ -32,6 +34,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout><Home /></MainLayout>} />
         <Route path="/login" element={<MainLayout><Login /></MainLayout>} />
+        <Route path="/manageLogin" element={<MMainLayout><ManageLogin /></MMainLayout>} />
         <Route path="/signup" element={<MainLayout><Signup /></MainLayout>} />
         <Route path="/mypage" element={<MainLayout><Mypage /></MainLayout>} />
         <Route path="/recipe" element={<MainLayout><Recipe /></MainLayout>} />
@@ -45,12 +48,12 @@ function App() {
         <Route path="/reportForm" element={<MainLayout><ReportForm/></MainLayout>} />
 
 
-        <Route path="/manager" element={<MainLayout><Manager/></MainLayout>} />
-        <Route path="/memberList" element={<MainLayout><MemberList/></MainLayout>} />
-        <Route path="/Notice" element={<MainLayout><Notice/></MainLayout>} />
-        <Route path="/NonMember" element={<MainLayout><NonMember/></MainLayout>} />
-        <Route path="/DataManagement" element={<MainLayout><DataManagement/></MainLayout>} />
-        <Route path="Inquiry" element={<MainLayout><Inquiry/></MainLayout>} />
+        <Route path="/manager" element={<MMainLayout><Manager/></MMainLayout>} />
+        <Route path="/memberList" element={<MMainLayout><MemberList/></MMainLayout>} />
+        <Route path="/Notice" element={<MMainLayout><Notice/></MMainLayout>} />
+        <Route path="/NonMember" element={<MMainLayout><NonMember/></MMainLayout>} />
+        <Route path="/DataManagement" element={<MMainLayout><DataManagement/></MMainLayout>} />
+        <Route path="Inquiry" element={<MMainLayout><Inquiry/></MMainLayout>} />
 
       </Routes>
     </Router>

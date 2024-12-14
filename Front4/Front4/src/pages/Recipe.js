@@ -1,13 +1,12 @@
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import '../components/css/Recipe.css';
-import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { changeField } from '../modules/write'; // 리덕스 액션 가져오기
-import styled from 'styled-components';
 
 // 스타일링 컴포넌트
 const MyBlock = styled.div`
@@ -24,13 +23,33 @@ const MyBlock = styled.div`
   }
 `;
 
+// 모달 스타일
+const ModalWrapper = styled.div`
+  display: ${(props) => (props.show ? 'flex' : 'none')};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+const ModalContent = styled.div`
+  width: 400px;
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+
+
 const Recipe = () => {
   const dispatch = useDispatch();
-  const { content } = useSelector((state) => state.write); // 리덕스 스토어에서 content 가져오기
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const rendered = useRef(false);
   const [recipes, setRecipes] = useState(() => {
-    // localStorage에서 초기 데이터 로드
     const savedRecipes = localStorage.getItem('recipes');
     return savedRecipes ? JSON.parse(savedRecipes) : [];
   });
@@ -41,73 +60,45 @@ const Recipe = () => {
     servings: '',
     description: '',
     method: '',
-    ingredients: '',
-    optionalIngredients: ''
+    ingredients: [],
+    optionalIngredients: [],
   });
 
   const [editIndex, setEditIndex] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(''); // '필수' 또는 '선택'
+  const [ingredientInput, setIngredientInput] = useState(''); // 모달에서 입력한 재료
 
-  // 레시피가 변경될 때마다 localStorage에 저장
+  // 레시피 변경 시 localStorage 저장
   useEffect(() => {
     localStorage.setItem('recipes', JSON.stringify(recipes));
   }, [recipes]);
 
-  // 에디터 상태 변화 시 실행되는 함수
+  // 에디터 상태 변화 처리
   const onEditorStateChange = (newEditorState) => {
     setEditorState(newEditorState);
     const contentAsHtml = draftToHtml(convertToRaw(newEditorState.getCurrentContent()));
-    setNewRecipe({ ...newRecipe, method: contentAsHtml }); // 에디터 내용을 newRecipe에 반영
-    dispatch(changeField({ key: 'content', value: contentAsHtml })); // 리덕스 액션 호출
+    setNewRecipe({ ...newRecipe, method: contentAsHtml });
+    dispatch(changeField({ key: 'content', value: contentAsHtml }));
   };
 
-  // HTML 컨텐츠를 에디터 초기값으로 변환하여 설정
-  useEffect(() => {
-    if (rendered.current) return;
-    rendered.current = true;
-
-    if (content) {
-      const blocksFromHtml = htmlToDraft(content);
-      if (blocksFromHtml) {
-        const { contentBlocks, entityMap } = blocksFromHtml;
-        const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-        const initialEditorState = EditorState.createWithContent(contentState);
-        setEditorState(initialEditorState);
-      }
-    }
-  }, [content]);
-
-
-
-
-
-  // 새 레시피 추가 함수
+  // 새 레시피 추가
   const handleAddRecipe = () => {
     if (newRecipe.name.trim() !== '' && newRecipe.method.trim() !== '') {
       setRecipes([...recipes, newRecipe]);
-      setNewRecipe({ name: '', time: '', servings: '', description: '', method: '', ingredients: '', optionalIngredients: '' });
+      setNewRecipe({
+        name: '',
+        time: '',
+        servings: '',
+        description: '',
+        method: '',
+        ingredients: [],
+        optionalIngredients: [],
+      });
     }
   };
 
-  // 레시피 삭제 함수
-  const handleDeleteRecipe = (index) => {
-    const updatedRecipes = recipes.filter((_, i) => i !== index);
-    setRecipes(updatedRecipes);
-  };
-
-  // 레시피 수정 시작 함수
-  const handleEditRecipe = (index) => {
-    setEditIndex(index);
-    setNewRecipe(recipes[index]);
-    const blocksFromHtml = htmlToDraft(recipes[index].method);
-    if (blocksFromHtml) {
-      const { contentBlocks, entityMap } = blocksFromHtml;
-      const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-      const initialEditorState = EditorState.createWithContent(contentState);
-      setEditorState(initialEditorState);
-    }
-  };
-
-  // 수정된 레시피 저장 함수
+  // 레시피 수정 저장
   const handleSaveEdit = () => {
     if (newRecipe.name.trim() !== '' && newRecipe.method.trim() !== '') {
       const updatedRecipes = recipes.map((recipe, index) =>
@@ -115,7 +106,56 @@ const Recipe = () => {
       );
       setRecipes(updatedRecipes);
       setEditIndex(null);
-      setNewRecipe({ name: '', time: '', servings: '', description: '', method: '', ingredients: '', optionalIngredients: '' });
+      setNewRecipe({
+        name: '',
+        time: '',
+        servings: '',
+        description: '',
+        method: '',
+        ingredients: [],
+        optionalIngredients: [],
+      });
+    }
+  };
+
+  // 모달 열기
+  const openModal = (type) => {
+    setModalType(type);
+    setIsModalOpen(true);
+  };
+
+  // 모달 닫기
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIngredientInput('');
+  };
+
+  // 재료 추가
+  const addIngredient = () => {
+    if (ingredientInput.trim() === '') return;
+
+    if (modalType === '필수') {
+      setNewRecipe({
+        ...newRecipe,
+        ingredients: [...newRecipe.ingredients, ingredientInput],
+      });
+    } else {
+      setNewRecipe({
+        ...newRecipe,
+        optionalIngredients: [...newRecipe.optionalIngredients, ingredientInput],
+      });
+    }
+    setIngredientInput('');
+  };
+
+  // 재료 삭제
+  const removeIngredient = (type, index) => {
+    if (type === '필수') {
+      const updatedIngredients = newRecipe.ingredients.filter((_, i) => i !== index);
+      setNewRecipe({ ...newRecipe, ingredients: updatedIngredients });
+    } else {
+      const updatedOptionalIngredients = newRecipe.optionalIngredients.filter((_, i) => i !== index);
+      setNewRecipe({ ...newRecipe, optionalIngredients: updatedOptionalIngredients });
     }
   };
 
@@ -134,7 +174,6 @@ const Recipe = () => {
             onChange={(e) => setNewRecipe({ ...newRecipe, name: e.target.value })}
           />
         </label>
-        <br/>
         <label>
           조리 시간(분):
           <input
@@ -144,7 +183,6 @@ const Recipe = () => {
             onChange={(e) => setNewRecipe({ ...newRecipe, time: e.target.value })}
           />
         </label>
-        <br/>
         <label>
           인원(인분):
           <input
@@ -154,21 +192,31 @@ const Recipe = () => {
             onChange={(e) => setNewRecipe({ ...newRecipe, servings: e.target.value })}
           />
         </label>
-        <br/>
         <label>
           필수 재료:
-          <input type='button'/>
+          <button onClick={() => openModal('필수')}>필수 재료 추가</button>
         </label>
-        <br/>
+        <ul>
+          {newRecipe.ingredients.map((ingredient, index) => (
+            <li key={index}>
+              {ingredient}
+              <button onClick={() => removeIngredient('필수', index)}>삭제</button>
+            </li>
+          ))}
+        </ul>
         <label>
           선택 재료:
-          <input type='button'/>
+          <button onClick={() => openModal('선택')}>선택 재료 추가</button>
         </label>
-        <label>
-          간단한 설명:
-        </label>
-        <br/>
-        
+        <ul>
+          {newRecipe.optionalIngredients.map((ingredient, index) => (
+            <li key={index}>
+              {ingredient}
+              <button onClick={() => removeIngredient('선택', index)}>삭제</button>
+            </li>
+          ))}
+        </ul>
+
         <MyBlock>
           <Editor
             wrapperClassName="wrapper-class"
@@ -190,7 +238,35 @@ const Recipe = () => {
         </button>
       </div>
 
-  
+     {/* 모달 */}
+<ModalWrapper show={isModalOpen}>
+  <ModalContent>
+    <h2>{modalType === '필수' ? '필수 재료 추가' : '선택 재료 추가'}</h2>
+    <input
+      type="text"
+      value={ingredientInput}
+      onChange={(e) => setIngredientInput(e.target.value)}
+      placeholder="재료 입력"
+      style={{
+        width: 'calc(100% - 20px)',
+        padding: '10px',
+        marginBottom: '20px',
+        borderRadius: '5px',
+        border: '1px solid #ccc',
+      }}
+    />
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <button className="modal-button" onClick={addIngredient}>
+        +
+      </button>
+      <button className="modal-button delete" onClick={closeModal}>
+        x
+      </button>
+    </div>
+  </ModalContent>
+</ModalWrapper>
+
+
     </div>
   );
 };

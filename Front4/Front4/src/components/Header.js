@@ -49,10 +49,11 @@ const Header = () => {
        
                 <li><Link to="/imageAnalysis">Image Analysis</Link></li>
                 <li><Link to="/fridgeInventory">Fridge Inventory</Link></li>
-              
+                <li><Link to="/recipe">recipe</Link></li>
+
+
               {/* 주석처리..?*/}
                   <li><Link to="/mypage">mypage</Link></li>  
-          
                   <li><Link to="/ingredient">ingredient</Link></li>  
                   <li><Link to="/imageAnalysis">imageAnalysis</Link></li>  
                   <li><Link to="/recipeResults">RecipeResults</Link></li>  

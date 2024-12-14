@@ -18,6 +18,7 @@ import InquiryForm from './pages/InquiryForm';
 import ReportForm from './pages/ReportForm';
 import ManageLogin from './pages/ManageLogin.js';
 import MMainLayout from './layouts/MMainLayout.js';
+import MHeader from './components/MHeader.js';
 
 //yn
 import Manager  from './pages/Manager';

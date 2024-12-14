@@ -4,16 +4,7 @@ import '../components/css/Notice.css'; // 폴더 구조에 맞게 경로 수정
 const Notice = () => {
   const [isRegisterMode, setRegisterMode] = useState(false); // 등록/목록 전환
   const [notices, setNotices] = useState([
-    { id: 1, title: '공지 1', author: '운영자', date: '2024.11.23' },
-    { id: 2, title: '공지 2', author: '운영자', date: '2024.11.23' },
-    { id: 3, title: '공지 3', author: '운영자', date: '2024.11.23' },
-    { id: 4, title: '공지 4', author: '운영자', date: '2024.11.23' },
-    { id: 5, title: '공지 5', author: '운영자', date: '2024.11.23' },
-    { id: 6, title: '공지 6', author: '운영자', date: '2024.11.23' },
-    { id: 7, title: '공지 7', author: '운영자', date: '2024.11.23' },
-    { id: 8, title: '공지 8', author: '운영자', date: '2024.11.23' },
-    { id: 9, title: '공지 9', author: '운영자', date: '2024.11.23' },
-    { id: 10, title: '공지 10', author: '운영자', date: '2024.11.23' },
+  
   ]);
   const [newNotice, setNewNotice] = useState({
     title: '',

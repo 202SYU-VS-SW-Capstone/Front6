@@ -76,6 +76,10 @@ const Recipe = () => {
     }
   }, [content]);
 
+
+
+
+
   // 새 레시피 추가 함수
   const handleAddRecipe = () => {
     if (newRecipe.name.trim() !== '' && newRecipe.method.trim() !== '') {
@@ -132,9 +136,9 @@ const Recipe = () => {
         </label>
         <br/>
         <label>
-          조리 시간:
+          조리 시간(분):
           <input
-            type="text"
+            type="number"
             placeholder="조리 시간"
             value={newRecipe.time}
             onChange={(e) => setNewRecipe({ ...newRecipe, time: e.target.value })}
@@ -144,7 +148,7 @@ const Recipe = () => {
         <label>
           인원(인분):
           <input
-            type="text"
+            type="number"
             placeholder="인원 (인분)"
             value={newRecipe.servings}
             onChange={(e) => setNewRecipe({ ...newRecipe, servings: e.target.value })}
@@ -153,20 +157,12 @@ const Recipe = () => {
         <br/>
         <label>
           필수 재료:
-          <textarea
-            placeholder="필수 재료"
-            value={newRecipe.ingredients}
-            onChange={(e) => setNewRecipe({ ...newRecipe, ingredients: e.target.value })}
-          ></textarea>
+          <input type='button'/>
         </label>
         <br/>
         <label>
           선택 재료:
-          <textarea
-            placeholder="선택 재료"
-            value={newRecipe.optionalIngredients}
-            onChange={(e) => setNewRecipe({ ...newRecipe, optionalIngredients: e.target.value })}
-          ></textarea>
+          <input type='button'/>
         </label>
         <label>
           간단한 설명:
@@ -194,25 +190,7 @@ const Recipe = () => {
         </button>
       </div>
 
-      {/* 레시피 목록과 수정, 삭제 버튼 */}
-      <ul className="recipe-list">
-        {recipes.map((recipe, index) => (
-          <li key={index}>
-            <div>
-              <h3>{recipe.name}</h3>
-              <p>조리 시간: {recipe.time}</p>
-              <p>인원: {recipe.servings}</p>
-              <p>설명: {recipe.description}</p>
-              <p>필수 재료: {recipe.ingredients}</p>
-              <p>선택 재료: {recipe.optionalIngredients}</p>
-              <p dangerouslySetInnerHTML={{ __html: recipe.method }}></p>
-              <button onClick={() => handleEditRecipe(index)}>수정</button>
-
-              <button onClick={() => handleDeleteRecipe(index)}>삭제</button>
-            </div>
-          </li>
-        ))}
-      </ul>
+  
     </div>
   );
 };

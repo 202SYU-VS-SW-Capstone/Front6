@@ -1,9 +1,11 @@
 package com.ohgiraffers.recipeapp.controller;
 
+import com.ohgiraffers.recipeapp.dto.LoginRequestDTO;
 import com.ohgiraffers.recipeapp.entity.Member;
 import com.ohgiraffers.recipeapp.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -65,6 +67,24 @@ public class MemberController {
     ) {
         Member member = memberService.updateMember(id, updatedMember);
         return ResponseEntity.ok(member);
+    }
+
+    // 로그인 API 추가
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequest) {
+        try {
+            Member member = memberService.getMemberByEmail(loginRequest.getEmail());
+
+            if (!member.getPassword().equals(loginRequest.getPassword())) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body("ID 혹은 비밀번호가 틀렸습니다. 다시 입력하세요.");
+            }
+
+            return ResponseEntity.ok("로그인 성공!"); // 추후 JWT 반환 로직으로 수정 가능
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("ID 혹은 비밀번호가 틀렸습니다. 다시 입력하세요.");
+        }
     }
 
     /**

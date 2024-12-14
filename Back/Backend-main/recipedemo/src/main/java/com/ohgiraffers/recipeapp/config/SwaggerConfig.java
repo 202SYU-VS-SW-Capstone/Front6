@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 public class SwaggerConfig {
 
-    // http://localhost:8080/swagger-ui/index.html
+    // http://localhost:8081/swagger-ui/index.html
     // 위의 주석 입력 후 들어가기
     @Bean
     public OpenAPI openAPI() {

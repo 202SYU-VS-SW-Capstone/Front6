@@ -1,57 +1,68 @@
 import React, { useState } from 'react';
-import '../components/css/Signup.css';
 import { useNavigate } from 'react-router-dom';
 import { signup } from '../modules/api/memberApi'; // API 함수 import
+import '../components/css/Signup.css';
 
 const Signup = () => {
   const navigate = useNavigate();
-  
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [securityQuestion, setSecurityQuestion] = useState('');
-  const [securityAnswer, setSecurityAnswer] = useState('');
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    passwordConfirm: '',
+    nickname: '',
+    securityQuestion: '',
+    securityAnswer: '',
+  });
+
   const [termsAccepted, setTermsAccepted] = useState({
     privacyPolicy: false,
     dataSharing: false,
     marketing: false,
   });
 
-  // 회원가입 처리 함수
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setTermsAccepted({
+      ...termsAccepted,
+      [name]: checked,
+    });
+  };
+
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    if (password !== passwordConfirm) {
-      alert("비밀번호가 일치하지 않습니다.");
+    if (formData.password !== formData.passwordConfirm) {
+      alert('비밀번호가 일치하지 않습니다.');
       return;
     }
 
     const signupData = {
-      email: username,
-      password,
-      nickname,
-      securityQuestion,
-      securityAnswer,
-      memberType: "Regular", // 기본 회원 유형 설정
-      joinDate: new Date().toISOString().split('T')[0], // 오늘 날짜
+      email: formData.email,
+      password: formData.password,
+      nickname: formData.nickname,
+      securityQuestion: formData.securityQuestion,
+      securityAnswer: formData.securityAnswer,
+      memberType: 'Regular',
+      joinDate: new Date().toISOString().split('T')[0],
     };
 
     try {
-      await signup(signupData); // API 함수 호출
-      alert("회원가입이 완료되었습니다.");
-      navigate('/login'); // 성공 후 로그인 페이지로 이동
+      await signup(signupData);
+      alert('회원가입이 완료되었습니다.');
+      navigate('/login');
     } catch (error) {
-      console.error("회원가입 실패:", error);
-      alert(error.message || "회원가입에 실패했습니다.");
+      console.error('회원가입 실패:', error);
+      alert(error.message || '회원가입에 실패했습니다.');
     }
-  };
-
-  const handleCheckboxChange = (e) => {
-    setTermsAccepted({
-      ...termsAccepted,
-      [e.target.name]: e.target.checked,
-    });
   };
 
   return (
@@ -59,18 +70,16 @@ const Signup = () => {
       <h2>회원가입</h2>
       <form className="signup-form" onSubmit={handleSignup}>
         <div className="form-group">
-          <label htmlFor="username">아이디</label>
-          <div className="input-group">
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="아이디를 입력하세요"
-              required
-            />
-            <button type="button" className="duplicate-check-btn">중복확인</button>
-          </div>
+          <label htmlFor="email">아이디</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="아이디를 입력하세요"
+            required
+          />
         </div>
 
         <div className="form-group">
@@ -78,20 +87,22 @@ const Signup = () => {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
             placeholder="비밀번호를 입력하세요"
             required
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="password-confirm">비밀번호 확인</label>
+          <label htmlFor="passwordConfirm">비밀번호 확인</label>
           <input
             type="password"
-            id="password-confirm"
-            value={passwordConfirm}
-            onChange={(e) => setPasswordConfirm(e.target.value)}
+            id="passwordConfirm"
+            name="passwordConfirm"
+            value={formData.passwordConfirm}
+            onChange={handleInputChange}
             placeholder="비밀번호를 다시 입력하세요"
             required
           />
@@ -99,25 +110,24 @@ const Signup = () => {
 
         <div className="form-group">
           <label htmlFor="nickname">닉네임</label>
-          <div className="input-group">
-            <input
-              type="text"
-              id="nickname"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-              placeholder="닉네임을 입력하세요"
-              required
-            />
-            <button type="button" className="duplicate-check-btn">중복확인</button>
-          </div>
+          <input
+            type="text"
+            id="nickname"
+            name="nickname"
+            value={formData.nickname}
+            onChange={handleInputChange}
+            placeholder="닉네임을 입력하세요"
+            required
+          />
         </div>
 
         <div className="form-group">
-          <label htmlFor="security-question">비밀번호 찾기 질문</label>
+          <label htmlFor="securityQuestion">비밀번호 찾기 질문</label>
           <select
-            id="security-question"
-            value={securityQuestion}
-            onChange={(e) => setSecurityQuestion(e.target.value)}
+            id="securityQuestion"
+            name="securityQuestion"
+            value={formData.securityQuestion}
+            onChange={handleInputChange}
             required
           >
             <option value="" disabled>선택하세요</option>
@@ -130,12 +140,13 @@ const Signup = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="security-answer">답변</label>
+          <label htmlFor="securityAnswer">답변</label>
           <input
             type="text"
-            id="security-answer"
-            value={securityAnswer}
-            onChange={(e) => setSecurityAnswer(e.target.value)}
+            id="securityAnswer"
+            name="securityAnswer"
+            value={formData.securityAnswer}
+            onChange={handleInputChange}
             placeholder="답변을 입력하세요"
             required
           />

@@ -1,14 +1,40 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../modules/api/memberApi';
 import '../components/css/Login.css';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // 로그인 처리 로직을 여기에 추가.
-    console.log('Logging in with:', { username, password });
+
+    try {
+      const response = await login(formData);
+      alert(response); // 로그인 성공 메시지
+      console.log('로그인 성공:', response);
+
+      // 로그인 상태를 localStorage에 저장
+      localStorage.setItem('isLoggedIn', 'true');
+
+      navigate('/'); // 메인 페이지로 이동
+    } catch (error) {
+      console.error('로그인 실패:', error);
+      alert(error || 'ID 혹은 비밀번호가 틀렸습니다. 다시 입력하세요.');
+    }
   };
 
   return (
@@ -16,12 +42,14 @@ const Login = () => {
       <h2>로그인</h2>
       <form onSubmit={handleLogin}>
         <div className="form-group">
-          <label htmlFor="username">아이디</label>
+          <label htmlFor="email">아이디</label>
           <input
             type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="아이디를 입력하세요"
             required
           />
         </div>
@@ -30,13 +58,17 @@ const Login = () => {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            placeholder="비밀번호를 입력하세요"
             required
           />
         </div>
         <button type="submit" className="login-button">로그인</button>
-        <p className="login-link">계정이 없으신가요? <a href="./Signup">회원가입 하러 가기</a></p>
+        <p className="login-link">
+          계정이 없으신가요? <a href="./Signup">회원가입 하러 가기</a>
+        </p>
       </form>
     </div>
   );

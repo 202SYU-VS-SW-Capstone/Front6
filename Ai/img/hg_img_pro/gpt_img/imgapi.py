@@ -1,6 +1,11 @@
 import base64
 import openai
+<<<<<<< HEAD
+import json
+openai.api_key = "b-"
+=======
 openai.api_key = "sk-7UDYIcKhUkb-"
+>>>>>>> parent of 0d45f7a (#05)
 
 def getimg(imgpath):
 

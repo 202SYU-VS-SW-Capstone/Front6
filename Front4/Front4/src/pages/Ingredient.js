@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import { addRefrigeratorIngredient } from '../modules/api/memberApi'; // 재료 추가 함수 가져오기
+import { AuthContext } from '../modules/contexts/AuthContext'; // 로그인 정보 가져오기
 import '../components/css/Ingredient.css';
 
 class Ingredient extends Component {
+  static contextType = AuthContext; // AuthContext 사용
+
   constructor(props) {
     super(props);
     this.state = {
@@ -12,6 +16,7 @@ class Ingredient extends Component {
       weight: 0,
       weightUnit: 'g',
       quantity: 1,
+      error: null,
     };
   }
 
@@ -31,20 +36,62 @@ class Ingredient extends Component {
     this.setState((prevState) => ({ quantity: Math.max(prevState.quantity - 1, 0) }));
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(this.state);
+  
+    const { name, category, expiryDate, weight, weightUnit, quantity } = this.state;
+  
+    // 로그인한 사용자 정보 가져오기
+    const { userInfo } = this.context; // AuthContext 사용
+    if (!userInfo || !userInfo.memberId) {
+      console.error('로그인이 필요합니다.');
+      alert('로그인 후 이용해주세요.');
+      return; // 함수 종료
+    }
+  
+    const memberId = userInfo.memberId;
+  
+    // API에 전달할 데이터 객체 생성
+    const ingredientData = {
+      ingredientName: name,
+      subCategory: category,
+      expirationDate: expiryDate,
+      quantity: `${weight}${weightUnit} x ${quantity}`, // 무게와 수량 합쳐서 저장
+      memberId: memberId,
+      status: 'Unused', // 초기 상태는 미사용
+    };
+  
+    console.log("전송할 데이터:", ingredientData);
+    
+    try {
+      // API 호출
+      const response = await addRefrigeratorIngredient(ingredientData);
+      console.log('재료 추가 성공:', response);
+      alert('재료가 성공적으로 추가되었습니다.');
+      this.setState({
+        name: '',
+        category: '',
+        expiryDate: '',
+        weight: 0,
+        weightUnit: 'g',
+        quantity: 1,
+      });
+    } catch (error) {
+      console.error('재료 추가 중 오류:', error);
+      this.setState({ error: '재료 추가에 실패했습니다. 다시 시도해주세요.' });
+    }
   };
 
   render() {
-    const { image, name, category, expiryDate, weight, weightUnit, quantity } = this.state;
+    const { image, name, category, expiryDate, weight, weightUnit, quantity, error } = this.state;
 
     return (
       <form className="ingredient-form" onSubmit={this.handleSubmit}>
-        
+        {/* 에러 메시지 */}
+        {error && <p className="error-message">{error}</p>}
+
         {/* 사진 업로드 */}
         <div className="form-group">
-        
           <div className="image-upload">
             {image ? (
               <img src={image} alt="재료 사진" className="image-preview" />
@@ -148,3 +195,4 @@ class Ingredient extends Component {
 }
 
 export default Ingredient;
+

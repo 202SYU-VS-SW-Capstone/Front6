@@ -61,6 +61,7 @@ public class RefrigeratorIngredientController {
      */
     @PostMapping
     public ResponseEntity<RefrigeratorIngredientDTO> addIngredient(@RequestBody RefrigeratorIngredientDTO dto) {
+        System.out.println("DTO 확인: " + dto); // 디버깅용 로그 추가
         return ResponseEntity.ok(
                 RefrigeratorIngredientDTO.fromEntity(service.addIngredient(dto))
         );

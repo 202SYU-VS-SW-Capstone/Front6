@@ -1,18 +1,25 @@
 package com.ohgiraffers.recipeapp.service;
 
+import com.ohgiraffers.recipeapp.dto.RefrigeratorIngredientDTO;
 import com.ohgiraffers.recipeapp.entity.Member;
+import com.ohgiraffers.recipeapp.entity.RefrigeratorIngredient;
 import com.ohgiraffers.recipeapp.repository.MemberRepository;
+import com.ohgiraffers.recipeapp.repository.RefrigeratorIngredientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final RefrigeratorIngredientRepository refrigeratorIngredientRepository;
 
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(MemberRepository memberRepository,
+                         RefrigeratorIngredientRepository refrigeratorIngredientRepository) {
         this.memberRepository = memberRepository;
+        this.refrigeratorIngredientRepository = refrigeratorIngredientRepository;
     }
 
     /**
@@ -76,6 +83,22 @@ public class MemberService {
     }
 
     /**
+     * 비밀번호 변경
+     *
+     * @param id            비밀번호를 변경할 회원의 ID
+     * @param newPassword   새로운 비밀번호
+     * @throws IllegalArgumentException 회원 ID에 해당하는 정보가 없을 경우 예외 발생
+     */
+    public void changePassword(Long id, String newPassword) {
+        // 회원 ID를 기반으로 회원 정보 조회
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
+
+        member.setPassword(newPassword); // 비밀번호 업데이트
+        memberRepository.save(member); // 변경된 회원 정보를 저장
+    }
+
+    /**
      * 회원 삭제
      *
      * @param id 삭제할 회원 ID
@@ -94,5 +117,18 @@ public class MemberService {
     public Member getMemberByNickname(String nickname) {
         return memberRepository.findByNickname(nickname)
                 .orElseThrow(() -> new IllegalArgumentException("Member not found with nickname: " + nickname));
+    }
+
+    /**
+     * 특정 회원의 냉장고에 있는 식재료 목록을 조회하여 DTO로 반환합니다.
+     *
+     * @param memberId 회원 ID (냉장고 재료를 조회할 회원의 고유 ID)
+     * @return List<RefrigeratorIngredientDTO> - 회원의 냉장고 재료 목록 DTO 리스트
+     */
+    public List<RefrigeratorIngredientDTO> getRefrigeratorIngredientsByMemberId(Long memberId) {
+        List<RefrigeratorIngredient> ingredients = refrigeratorIngredientRepository.findByMember_Id(memberId);
+        return ingredients.stream()
+                .map(RefrigeratorIngredientDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 }

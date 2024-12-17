@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './modules/contexts/AuthContext';
 import MainLayout from './layouts/MainLayout';
 import Home from './components/Home';     
 import Header from './components/Header';   
@@ -31,33 +32,36 @@ import Inquiry from './pages/Inquiry.js';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-        <Route path="/login" element={<MainLayout><Login /></MainLayout>} />
-        <Route path="/manageLogin" element={<MMainLayout><ManageLogin /></MMainLayout>} />
-        <Route path="/signup" element={<MainLayout><Signup /></MainLayout>} />
-        <Route path="/mypage" element={<MainLayout><Mypage /></MainLayout>} />
-        <Route path="/recipe" element={<MainLayout><Recipe /></MainLayout>} />
-        <Route path="/ingredient" element={<MainLayout><Ingredient /></MainLayout>} />
-        <Route path="/imageAnalysis" element={<MainLayout><ImageAnalysis /></MainLayout>} />
-        <Route path="/recipeResults" element={<MainLayout><RecipeResults /></MainLayout>} />
-        <Route path="/fridgeInventory" element={<MainLayout><FridgeInventory /></MainLayout>} />
-        <Route path="/withdraw" element={<MainLayout><Withdraw /></MainLayout>} />
-        <Route path="/passwordChange" element={<MainLayout><PasswordChange /></MainLayout>} />
-        <Route path="/inquiryForm" element={<MainLayout><InquiryForm/></MainLayout>} />
-        <Route path="/reportForm" element={<MainLayout><ReportForm/></MainLayout>} />
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+          <Route path="/login" element={<MainLayout><Login /></MainLayout>} />
+          <Route path="/manageLogin" element={<MMainLayout><ManageLogin /></MMainLayout>} />
+          <Route path="/signup" element={<MainLayout><Signup /></MainLayout>} />
+          <Route path="/mypage" element={<MainLayout><Mypage /></MainLayout>} />
+          <Route path="/recipe" element={<MainLayout><Recipe /></MainLayout>} />
+          <Route path="/ingredient" element={<MainLayout><Ingredient /></MainLayout>} />
+          <Route path="/imageAnalysis" element={<MainLayout><ImageAnalysis /></MainLayout>} />
+          <Route path="/recipeResults" element={<MainLayout><RecipeResults /></MainLayout>} />
+          <Route path="/fridgeInventory" element={<MainLayout><FridgeInventory /></MainLayout>} />
+          <Route path="/withdraw" element={<MainLayout><Withdraw /></MainLayout>} />
+          <Route path="/passwordChange" element={<MainLayout><PasswordChange /></MainLayout>} />
+          <Route path="/inquiryForm" element={<MainLayout><InquiryForm/></MainLayout>} />
+          <Route path="/reportForm" element={<MainLayout><ReportForm/></MainLayout>} />
 
 
-        <Route path="/manager" element={<MMainLayout><Manager/></MMainLayout>} />
-        <Route path="/memberList" element={<MMainLayout><MemberList/></MMainLayout>} />
-        <Route path="/Notice" element={<MMainLayout><Notice/></MMainLayout>} />
-        <Route path="/NonMember" element={<MMainLayout><NonMember/></MMainLayout>} />
-        <Route path="/DataManagement" element={<MMainLayout><DataManagement/></MMainLayout>} />
-        <Route path="Inquiry" element={<MMainLayout><Inquiry/></MMainLayout>} />
+          <Route path="/manager" element={<MMainLayout><Manager/></MMainLayout>} />
+          <Route path="/memberList" element={<MMainLayout><MemberList/></MMainLayout>} />
+          <Route path="/Notice" element={<MMainLayout><Notice/></MMainLayout>} />
+          <Route path="/NonMember" element={<MMainLayout><NonMember/></MMainLayout>} />
+          <Route path="/DataManagement" element={<MMainLayout><DataManagement/></MMainLayout>} />
+          <Route path="Inquiry" element={<MMainLayout><Inquiry/></MMainLayout>} />
 
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+    </AuthProvider>
+    
   );
 }
 

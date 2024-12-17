@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../modules/api/memberApi';
+import { useAuth } from '../modules/contexts/AuthContext'; // AuthContext 사용
 import '../components/css/Login.css';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth(); // AuthContext의 login 함수 가져오기
 
   const [formData, setFormData] = useState({
     email: '',
@@ -23,19 +25,28 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await login(formData);
-      alert(response); // 로그인 성공 메시지
-      console.log('로그인 성공:', response);
+      const response = await login(formData); // 백엔드 API 호출
+      if (response.success) {
+        alert(response.message); // "로그인 성공!" 메시지
+        console.log('로그인 성공:', response);
 
-      // 로그인 상태를 localStorage에 저장
-      localStorage.setItem('isLoggedIn', 'true');
+        // AuthContext를 통해 로그인 상태와 사용자 정보 업데이트
+        authLogin({
+          email: response.email,
+          nickname: response.nickname,
+          memberId: response.memberId,
+        });
 
-      navigate('/'); // 메인 페이지로 이동
+        navigate('/'); // 메인 페이지로 이동
+      } else {
+        alert(response.message); // 로그인 실패 메시지
+      }
     } catch (error) {
       console.error('로그인 실패:', error);
-      alert(error || 'ID 혹은 비밀번호가 틀렸습니다. 다시 입력하세요.');
+      alert('Id 혹은 비밀번호가 틀렸습니다. 다시 입력하세요.');
     }
   };
+  
 
   return (
     <div className="login-container">

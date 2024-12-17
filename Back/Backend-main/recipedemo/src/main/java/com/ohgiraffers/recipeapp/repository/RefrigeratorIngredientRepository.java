@@ -16,7 +16,7 @@ public interface RefrigeratorIngredientRepository extends JpaRepository<Refriger
      * @param memberId 회원 ID
      * @return List<RefrigeratorIngredient> - 해당 회원의 냉장고 재료 목록
      */
-    List<RefrigeratorIngredient> findByMemberId(Long memberId);
+    List<RefrigeratorIngredient> findByMember_Id(Long memberId);
 
     /**
      * 특정 회원의 재료 이름으로 냉장고 재료 조회
@@ -25,5 +25,5 @@ public interface RefrigeratorIngredientRepository extends JpaRepository<Refriger
      * @param memberId 회원 ID
      * @return List<RefrigeratorIngredient> - 특정 이름과 회원 ID에 해당하는 재료 목록
      */
-    List<RefrigeratorIngredient> findByIngredientNameAndMemberId(String ingredientName, Long memberId);
+    List<RefrigeratorIngredient> findByIngredient_NameAndMember_Id(String ingredientName, Long memberId);
 }

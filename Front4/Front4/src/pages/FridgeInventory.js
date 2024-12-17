@@ -1,23 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // useNavigate를 import
+import { useAuth } from '../modules/contexts/AuthContext'; // 로그인한 사용자 정보 가져오기
+import { getRefrigeratorIngredients } from '../modules/api/memberApi'; // API 함수 가져오기
+import { useNavigate } from 'react-router-dom';
 import '../components/css/FridgeInventory.css';
 
 const FridgeInventory = () => {
-  const [ingredients, setIngredients] = useState([
-    { name: '감자', category: '채소류', expiry: '2023-10-01', status: '양호', weight: '500g', quantity: 3 },
-    { name: '우유', category: '유제품', expiry: '2023-10-05', status: '임박', weight: '1L', quantity: 1 },
-    { name: '당근', category: '채소류', expiry: '2023-10-08', status: '양호', weight: '300g', quantity: 2 },
-    { name: '치즈', category: '유제품', expiry: '2023-10-10', status: '임박', weight: '200g', quantity: 5 },
-    { name: '사과', category: '과일류', expiry: '2023-10-12', status: '양호', weight: '500g', quantity: 4 },
-  ]);
+  const { userInfo } = useAuth(); // 로그인된 사용자 정보 가져오기
+  const navigate = useNavigate();
+  const [ingredients, setIngredients] = useState([]); // 서버에서 불러온 식재료 상태
   const [filterText, setFilterText] = useState('');
   const [filteredIngredients, setFilteredIngredients] = useState([]);
-  
-  const navigate = useNavigate(); // useNavigate 훅을 호출하여 navigate 함수 생성
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  const [error, setError] = useState(null); // 에러 상태
 
+  // 백엔드에서 식재료 불러오기
+  useEffect(() => {
+    const fetchIngredients = async () => {
+      try {
+        if (!userInfo?.memberId) return; // 로그인 정보가 없으면 실행 중단
+        const data = await getRefrigeratorIngredients(userInfo.memberId);
+
+        // 수량과 무게 분리
+        const parsedData = data.map((item) => {
+          const [weight, quantity] = item.quantity.split(' x ');
+          return {
+            ...item,
+            weight, // "500g" 형식의 무게
+            quantity, // "3" 형식의 수량
+          };
+        });
+
+        setIngredients(parsedData);
+        setFilteredIngredients(parsedData);
+      } catch (err) {
+        console.error(err);
+        setError('식재료를 불러오는 중 오류가 발생했습니다.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchIngredients();
+  }, [userInfo]);
+
+  // 필터링 처리
   useEffect(() => {
     const filtered = ingredients.filter((ingredient) =>
-      ingredient.name.includes(filterText)
+      ingredient.ingredientName.includes(filterText)
     );
     setFilteredIngredients(filtered);
   }, [filterText, ingredients]);
@@ -27,13 +56,11 @@ const FridgeInventory = () => {
   };
 
   const handleAddIngredient = () => {
-    navigate('/ingredient'); // 'Ingredient.js' 경로로 이동
+    navigate('/ingredient'); // 재료 추가 페이지로 이동
   };
 
-  const handleDeleteIngredient = (name) => {
-    const updatedIngredients = ingredients.filter((ingredient) => ingredient.name !== name);
-    setIngredients(updatedIngredients);
-  };
+  if (loading) return <p>로딩 중...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="fridge-inventory">
@@ -42,7 +69,6 @@ const FridgeInventory = () => {
         <p>내 냉장고에 있는 재료들을 관리해보세요</p>
         <div className="button-group">
           <button className="add-button" onClick={handleAddIngredient}>재료추가</button>
-          <button className="delete-button" onClick={() => handleDeleteIngredient('우유')}>삭제하기</button>
         </div>
       </div>
 
@@ -70,15 +96,19 @@ const FridgeInventory = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredIngredients.map((ingredient, index) => (
+          {filteredIngredients.map((item, index) => (
             <tr key={index}>
-              <td>{ingredient.name}</td>
-              <td>{ingredient.category}</td>
-              <td>{ingredient.expiry}</td>
-              <td className={`status ${ingredient.status === '임박' ? 'warning' : 'normal'}`}>{ingredient.status}</td>
-              <td>{ingredient.weight}</td>
-              <td>{ingredient.quantity}</td>
-              <td><button className="edit-button">수정</button></td>
+              <td>{item.ingredientName}</td>
+              <td>{item.subCategory}</td>
+              <td>{item.expirationDate}</td>
+              <td className={`status ${item.status === '임박' ? 'warning' : 'normal'}`}>
+                {item.status}
+              </td>
+              <td>{item.weight}</td>
+              <td>{item.quantity}</td>
+              <td>
+                <button className="edit-button">수정</button>
+              </td>
             </tr>
           ))}
         </tbody>

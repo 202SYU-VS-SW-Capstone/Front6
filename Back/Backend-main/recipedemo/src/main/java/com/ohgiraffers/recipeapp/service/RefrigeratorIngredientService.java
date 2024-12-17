@@ -50,7 +50,7 @@ public class RefrigeratorIngredientService {
      * @return RefrigeratorIngredient
      */
     public List<RefrigeratorIngredient> getByName(String ingredientName, Long memberId) {
-        return repository.findByIngredientNameAndMemberId(ingredientName, memberId);
+        return repository.findByIngredient_NameAndMember_Id(ingredientName, memberId);
     }
 
     /**
@@ -103,6 +103,14 @@ public class RefrigeratorIngredientService {
      * @return RefrigeratorIngredient - 변환된 Entity 객체
      */
     private RefrigeratorIngredient mapToEntity(RefrigeratorIngredientDTO dto) {
+        if (dto.getMemberId() == null) {
+            throw new IllegalArgumentException("Member ID is required");
+        }
+
+        // 이미 존재하는 Member 객체 조회
+        Member member = memberRepository.findById(dto.getMemberId())
+                .orElseThrow(() -> new IllegalArgumentException("Member not found with ID: " + dto.getMemberId()));
+
         Ingredient ingredient;
         if (dto.getIngredientId() != null) {
             ingredient = ingredientRepository.findById(dto.getIngredientId())
@@ -111,24 +119,21 @@ public class RefrigeratorIngredientService {
             List<Ingredient> ingredients = ingredientRepository.findByNameContainingIgnoreCase(dto.getIngredientName());
             if (ingredients.isEmpty()) {
                 throw new IllegalArgumentException("No ingredients found containing name: " + dto.getIngredientName());
-            } else if (ingredients.size() > 1) {
-                throw new IllegalArgumentException("Multiple ingredients found for name: " + dto.getIngredientName() + ". Be more specific.");
             }
-            ingredient = ingredients.get(0); // 정확히 하나일 경우 가져옴
+            ingredient = ingredients.get(0);
         } else {
             throw new IllegalArgumentException("Ingredient ID or Name must be provided");
         }
 
-        Member member = memberRepository.findById(dto.getMemberId())
-                .orElseThrow(() -> new IllegalArgumentException("Member not found with ID: " + dto.getMemberId()));
-
+        // RefrigeratorIngredient 객체 생성 (member 객체는 조회된 객체를 참조)
         return RefrigeratorIngredient.builder()
                 .ingredient(ingredient)
-                .member(member)
+                .member(member) // 조회된 Member 객체 참조
                 .quantity(dto.getQuantity())
                 .status(IngredientStatus.valueOf(dto.getStatus()))
                 .expirationDate(dto.getExpirationDate())
                 .build();
     }
+
 }
 

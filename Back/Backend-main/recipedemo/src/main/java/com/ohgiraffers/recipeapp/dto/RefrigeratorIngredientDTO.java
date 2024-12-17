@@ -17,7 +17,8 @@ public class RefrigeratorIngredientDTO {
     private Long ingredientId;      // 재료 ID (옵션)
     private String ingredientName;  // 재료 이름
     private Long memberId;          // 회원 ID
-    private String quantity;        // 재료 수량
+    private String subCategory;     // 재료 소분류
+    private String quantity;        // 재료 수량 (무게 x 수량)
     private String status;          // 재료 상태 (ENUM: Unused, Used 등)
     private LocalDate expirationDate; // 유통기한
 
@@ -28,12 +29,10 @@ public class RefrigeratorIngredientDTO {
      * @return RefrigeratorIngredientDTO
      */
     public static RefrigeratorIngredientDTO fromEntity(RefrigeratorIngredient entity) {
-        Ingredient ingredient = entity.getIngredient();
-
         return RefrigeratorIngredientDTO.builder()
-                .ingredientId(ingredient.getId())
-                .ingredientName(ingredient.getName())
-                .memberId(entity.getMember().getId())
+                .ingredientId(entity.getIngredient().getId())
+                .ingredientName(entity.getIngredient().getName())
+                .subCategory(entity.getIngredient().getSubCategory().getName()) // subCategory 추가
                 .quantity(entity.getQuantity())
                 .status(entity.getStatus().name())
                 .expirationDate(entity.getExpirationDate())
